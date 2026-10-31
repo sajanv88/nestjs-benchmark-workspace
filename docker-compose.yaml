@@ -59,10 +59,10 @@ services:
       <<: *bench-healthcheck
       test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3003/health"]
 
-  # A one-shot CLI for now, behind a profile so `docker compose up` doesn't start a load test.
-  # Run it with: docker compose run --rm runner
+  # Waits for POST /run; starting it starts no load. Published on the host's loopback only:
+  # it executes load tests on request and must never be exposed publicly.
+  # One-shot CLI: docker compose run --rm -T runner node dist/cli.js
   runner:
-    profiles: [cli]
     image: runner:local
     build:
       context: .
@@ -76,6 +76,18 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4000"
+      RESULTS_PATH: /data/latest.json
+    ports:
+      - "127.0.0.1:4000:4000"
+    volumes:
+      - ./results:/data
+    healthcheck:
+      <<: *bench-healthcheck
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:4000/health"]
     depends_on:
       bench-express:
         condition: service_healthy
