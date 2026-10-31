@@ -4,6 +4,10 @@ A live benchmark of three NestJS HTTP adapters, charted with [nuvui](https://nuv
 
 Author: sajanv88
 
+![The benchmark page: a bar chart of requests per second for each adapter on three routes, with Nest + Node leading on all of them](docs/screenshot.png)
+
+A full run on one machine. See [Reading the numbers](#reading-the-numbers).
+
 > [!WARNING]
 > The runner executes load tests on request and has no authentication. Out of the box, Compose publishes it on `127.0.0.1` only, and it refuses other hosts and origins. You're free to change that, but exposing it publicly isn't recommended: anyone who can reach it can start load tests on your machine. If you do, it's at your own risk.
 
