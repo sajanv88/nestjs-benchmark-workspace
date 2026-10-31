@@ -58,3 +58,28 @@ services:
     healthcheck:
       <<: *bench-healthcheck
       test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3003/health"]
+
+  # A one-shot CLI for now, behind a profile so `docker compose up` doesn't start a load test.
+  # Run it with: docker compose run --rm runner
+  runner:
+    profiles: [cli]
+    image: runner:local
+    build:
+      context: .
+      dockerfile: apps/runner/Dockerfile
+    # More than the apps get, so the load generator is never the bottleneck being measured.
+    cpus: 2.0
+    mem_limit: 1g
+    memswap_limit: 1g
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      bench-express:
+        condition: service_healthy
+      bench-fastify:
+        condition: service_healthy
+      bench-node:
+        condition: service_healthy
