@@ -1,6 +1,6 @@
 "use client";
 
-import { BenchEvent, type RunResult } from "@repo/types";
+import { BenchEvent, type RunConfig, type RunResult } from "@repo/types";
 import { useCallback, useEffect, useReducer } from "react";
 import * as v from "valibot";
 import {
@@ -18,9 +18,12 @@ const NAMED_EVENTS = [
   "run-finished",
 ] as const;
 
+/** What's left out takes the runner's default. */
+type RunRequest = Partial<RunConfig>;
+
 export type UseBenchmark = {
   state: BenchmarkState;
-  run: () => void;
+  run: (request: RunRequest) => void;
   stop: () => void;
 };
 
@@ -53,12 +56,12 @@ export function useBenchmark(runnerUrl: string, initialResult: RunResult | null)
   }, [runnerUrl]);
 
   const post = useCallback(
-    async (path: "/run" | "/stop", refused: string): Promise<void> => {
+    async (path: "/run" | "/stop", refused: string, body: RunRequest = {}): Promise<void> => {
       try {
         const response = await fetch(`${runnerUrl}${path}`, {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: "{}",
+          body: JSON.stringify(body),
         });
         if (!response.ok) dispatch({ type: "failed", message: refused });
       } catch {
@@ -68,9 +71,12 @@ export function useBenchmark(runnerUrl: string, initialResult: RunResult | null)
     [runnerUrl],
   );
 
-  const run = useCallback(() => {
-    void post("/run", "A run is already active.");
-  }, [post]);
+  const run = useCallback(
+    (request: RunRequest) => {
+      void post("/run", "A run is already active.", request);
+    },
+    [post],
+  );
 
   const stop = useCallback(() => {
     dispatch({ type: "stopping" });

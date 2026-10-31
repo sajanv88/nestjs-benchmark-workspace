@@ -1,0 +1,12 @@
+.connections-field {
+  &__heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__value {
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+}

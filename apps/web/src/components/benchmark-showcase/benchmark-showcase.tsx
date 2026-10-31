@@ -14,10 +14,11 @@ import {
   ToggleGroupItem,
   VisuallyHidden,
 } from "@nuvui/react";
-import { ROUTE_IDS, type RunResult } from "@repo/types";
+import { DEFAULT_CONNECTIONS, ROUTE_IDS, type RunResult } from "@repo/types";
 import { useState } from "react";
 import { BenchmarkChart } from "@/components/benchmark-chart/benchmark-chart";
 import { BenchmarkStats } from "@/components/benchmark-stats/benchmark-stats";
+import { ConnectionsField } from "@/components/connections-field/connections-field";
 import { RunActions } from "@/components/run-actions/run-actions";
 import { RunMessage } from "@/components/run-message/run-message";
 import { RunProgress } from "@/components/run-progress/run-progress";
@@ -65,6 +66,7 @@ export function BenchmarkShowcase({ initialResult, runnerUrl }: BenchmarkShowcas
   const { state, run, stop } = useBenchmark(runnerUrl, initialResult);
   const [filter, setFilter] = useState<RouteFilter>("all");
   const [unit, setUnit] = useState<Unit>("rps");
+  const [connections, setConnections] = useState(DEFAULT_CONNECTIONS);
 
   const { connection, result, run: runState } = state;
   const running = runState.status === "running" ? runState : null;
@@ -91,12 +93,19 @@ export function BenchmarkShowcase({ initialResult, runnerUrl }: BenchmarkShowcas
             on this machine. A full run takes about 5 minutes.
           </p>
         </div>
-        <RunActions
-          canRun={connection === "online" && !running}
-          canStop={Boolean(running) && !running?.stopping}
-          onRun={run}
-          onStop={stop}
-        />
+        <div className="benchmark-showcase__controls">
+          <ConnectionsField
+            value={running?.config.connections ?? connections}
+            disabled={Boolean(running)}
+            onChange={setConnections}
+          />
+          <RunActions
+            canRun={connection === "online" && !running}
+            canStop={Boolean(running) && !running?.stopping}
+            onRun={() => run({ connections })}
+            onStop={stop}
+          />
+        </div>
       </header>
 
       {/* Bar widths and tiles change every second, so milestones are announced here instead. */}
