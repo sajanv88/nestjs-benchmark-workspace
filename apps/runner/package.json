@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/types": "workspace:*",
     "autocannon": "catalog:",
     "valibot": "catalog:"
   },

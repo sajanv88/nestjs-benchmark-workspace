@@ -11,12 +11,22 @@ catalog:
   "@nestjs/platform-express": 12.3.2
   "@nestjs/platform-fastify": 12.3.2
   "@nestjs/platform-node": 12.3.2
+  "@nuvui/charts": 0.1.10
+  "@nuvui/react": 0.10.0
   "@types/autocannon": 7.12.7
   "@types/node": 26.6.5
+  "@types/react": 19.3.0
+  "@types/react-dom": 19.3.0
   autocannon: 8.0.0
+  next: 16.4.2
   postcss: 8.5.30
+  react: 19.3.1
+  react-dom: 19.3.1
+  recharts: 3.10.1
   reflect-metadata: 0.2.2
   rxjs: 7.8.2
+  sass: 1.105.2
+  server-only: 0.0.1
   stylelint: 17.16.0
   stylelint-config-standard-scss: 17.0.0
   typescript: 7.0.2
@@ -24,7 +34,8 @@ catalog:
 
 # Install scripts are denied unless listed here (strictDepBuilds is on by default).
 # Review a package's script before setting it to true.
-allowBuilds: {}
+allowBuilds:
+  "@parcel/watcher": false
 
 # Supply chain: a version must be a day old before it can be installed, and a package
 # whose new version lost the provenance its previous version had is refused.
