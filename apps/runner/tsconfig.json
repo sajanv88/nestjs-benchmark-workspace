@@ -1,0 +1,14 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "dist",
+    "erasableSyntaxOnly": true,
+    "lib": ["esnext"],
+    "types": ["node"]
+  },
+  "include": ["src"]
+}
