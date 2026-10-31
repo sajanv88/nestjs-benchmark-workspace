@@ -14,9 +14,12 @@ export type RouteId = v.InferOutput<typeof RouteId>;
 const whole = (min: number, max: number) =>
   v.pipe(v.number(), v.integer(), v.minValue(min), v.maxValue(max));
 
+export const DEFAULT_CONNECTIONS = 100;
+export const MAX_CONNECTIONS = 1000;
+
 // Defaults mirror the shape of the PR's wrk run: 100 connections, 3s warm-up, 8s per route.
 export const RunConfig = v.strictObject({
-  connections: v.optional(whole(1, 1000), 100),
+  connections: v.optional(whole(1, MAX_CONNECTIONS), DEFAULT_CONNECTIONS),
   warmupSeconds: v.optional(whole(1, 30), 3),
   measureSeconds: v.optional(whole(1, 60), 8),
   rounds: v.optional(whole(1, 9), 3),
