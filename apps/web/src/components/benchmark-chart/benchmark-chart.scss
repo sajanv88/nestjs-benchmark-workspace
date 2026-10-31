@@ -1,0 +1,9 @@
+.benchmark-chart {
+  --nuv-chart-aspect-ratio: auto;
+  --nuv-chart-backdrop: var(--color-surface);
+  --nuv-chart-height: 26rem;
+
+  &--single {
+    --nuv-chart-height: 13rem;
+  }
+}

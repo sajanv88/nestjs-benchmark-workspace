@@ -1,0 +1,21 @@
+@use "abstracts" as a;
+
+.run-settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: a.space(2) a.space(6);
+  margin: 0;
+
+  &__item {
+    display: flex;
+    gap: a.space(1);
+  }
+
+  &__name {
+    color: var(--color-muted-foreground);
+  }
+
+  &__value {
+    margin: 0;
+  }
+}
