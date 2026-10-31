@@ -67,3 +67,7 @@ pnpm typecheck
 pnpm lint
 pnpm build
 ```
+
+## Disclaimer
+
+This is an independent project. It isn't affiliated with, endorsed by or sponsored by NestJS, Express, Fastify, Node.js or any other project named here, and it makes no claims on their behalf. Their names and trademarks belong to their owners. The results are unofficial measurements from one machine.
