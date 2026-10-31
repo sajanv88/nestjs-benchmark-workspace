@@ -60,7 +60,7 @@ services:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3003/health"]
 
   # Waits for POST /run; starting it starts no load. Published on the host's loopback only:
-  # it executes load tests on request and must never be exposed publicly.
+  # it executes load tests on request and has no authentication.
   # One-shot CLI: docker compose run --rm -T runner node dist/cli.js
   runner:
     image: runner:local
