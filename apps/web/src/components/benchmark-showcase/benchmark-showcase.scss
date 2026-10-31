@@ -63,12 +63,17 @@
   &__links {
     display: flex;
     flex-wrap: wrap;
-    gap: a.space(2) a.space(6);
+    gap: 0 a.space(6);
     margin: 0;
   }
 
   &__link {
+    display: inline-flex;
+    align-items: center;
     color: var(--color-primary);
+
+    @include a.touch-target;
+    @include a.focus-ring;
   }
 
   &__skeleton-heading {
