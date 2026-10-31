@@ -27,6 +27,30 @@ Nest + Express, Nest + Fastify and Nest + Node serve the same three routes: `GET
 
 The shape follows [nestjs/nest#18063](https://github.com/nestjs/nest/pull/18063), which uses `wrk -t4 -c100`, with [autocannon](https://github.com/mcollina/autocannon) as the load generator: 100 connections, 3 s of warm-up and 8 s measured for each route. Only one adapter and route run at a time. Three rounds give one median for each pair.
 
+## Reading the numbers
+
+- **They're relative to this machine.** They aren't comparable to the PR's M1 Pro results, or to another computer.
+- **Read the order, not the exact ratio.** The order held in every run here. The size of the lead didn't: with the same 100 connections split across two load generators, Node's lead over Fastify on `GET /` fell from +54% to +6%.
+- **Expect noise.** A single figure can move by about 10% between runs.
+
+## Saved results
+
+A run that completes writes `results/latest.json`, replacing the one before. A stopped or failed run writes nothing. The file is ignored by git, so a fresh clone starts empty. The page shows the saved run when the runner is down.
+
+On Linux, the runner's user (uid 1001) needs write access to `results/`:
+
+```sh
+sudo chown 1001 results
+```
+
+## Without the page
+
+This prints the result as JSON and doesn't touch the saved file. Progress goes to stderr.
+
+```sh
+docker compose run --rm -T runner node dist/cli.js --rounds 1 --warmup 1 --measure 2 > run.json
+```
+
 ## Layout
 
 | Path | What it is |
