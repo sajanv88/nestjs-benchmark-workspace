@@ -1,0 +1,14 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"]
+  },
+  "include": ["src"]
+}
