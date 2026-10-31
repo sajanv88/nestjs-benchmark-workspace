@@ -1,5 +1,5 @@
 import { rename, writeFile } from "node:fs/promises";
-import type { RunResult } from "./events.js";
+import type { RunResult } from "@repo/types";
 
 // Written to a temp file and renamed, so a reader never sees half a document.
 export async function writeResults(path: string, result: RunResult): Promise<void> {

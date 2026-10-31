@@ -1,7 +1,7 @@
 import { setTimeout as sleep } from "node:timers/promises";
+import type { Adapter, RunEnvironment } from "@repo/types";
 import * as v from "valibot";
-import { ADAPTER_URLS, type Adapter } from "./config.js";
-import type { RunEnvironment } from "./events.js";
+import { ADAPTER_URLS } from "./config.js";
 
 const POLL_MS = 250;
 const WAIT_MS = 30_000;

@@ -1,6 +1,5 @@
+import type { BenchEvent, RunConfig } from "@repo/types";
 import { runBenchmark } from "./benchmark.js";
-import type { RunConfig } from "./config.js";
-import type { BenchEvent } from "./events.js";
 import { writeResults } from "./results-file.js";
 
 export type SequencedEvent = { id: number; event: BenchEvent };

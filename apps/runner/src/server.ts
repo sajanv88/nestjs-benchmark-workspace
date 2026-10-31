@@ -1,6 +1,6 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { RunConfig } from "@repo/types";
 import * as v from "valibot";
-import { RunConfig } from "./config.js";
 import { env } from "./env.js";
 import { createRunManager } from "./run-manager.js";
 

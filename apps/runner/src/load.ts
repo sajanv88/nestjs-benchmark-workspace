@@ -1,7 +1,8 @@
 import { lookup } from "node:dns/promises";
 import type { EventEmitter } from "node:events";
+import type { Adapter } from "@repo/types";
 import autocannon, { type Result } from "autocannon";
-import { ADAPTER_URLS, type Adapter, type Route } from "./config.js";
+import { ADAPTER_URLS, type Route } from "./config.js";
 
 export type LoadRequest = {
   adapter: Adapter;

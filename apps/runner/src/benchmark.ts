@@ -1,7 +1,18 @@
-import { ADAPTERS, type Adapter, ROUTES, type Route, type RunConfig } from "./config.js";
-import type { Emit, RoundResult, RouteResult, RunEnvironment, RunResult } from "./events.js";
+import {
+  ADAPTERS,
+  type Adapter,
+  type BenchEvent,
+  type RoundResult,
+  type RouteResult,
+  type RunConfig,
+  type RunEnvironment,
+  type RunResult,
+} from "@repo/types";
+import { ROUTES, type Route } from "./config.js";
 import { waitForHealth } from "./health.js";
 import { runLoad } from "./load.js";
+
+export type Emit = (event: BenchEvent) => void;
 
 function median(values: readonly number[]): number {
   const sorted = values.toSorted((a, b) => a - b);

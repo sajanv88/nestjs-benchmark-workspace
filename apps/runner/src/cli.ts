@@ -1,8 +1,7 @@
 import { parseArgs } from "node:util";
+import { type BenchEvent, RunConfig } from "@repo/types";
 import * as v from "valibot";
 import { runBenchmark } from "./benchmark.js";
-import { RunConfig } from "./config.js";
-import type { BenchEvent } from "./events.js";
 
 // Results go to stdout as JSON, progress to stderr, so stdout can be redirected to a file.
 function progress(event: BenchEvent): void {
