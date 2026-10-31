@@ -16,11 +16,22 @@ export type RouteResult = {
   rounds: RoundResult[];
 };
 
+/** What the apps reported about themselves, for the page's settings footer. */
+export type RunEnvironment = {
+  node: string;
+  cpus: number | null;
+  memoryBytes: number | null;
+};
+
+/** `partial`: reached the end, but at least one route or adapter failed. */
+export type RunStatus = "completed" | "partial" | "stopped";
+
 export type RunResult = {
+  status: RunStatus;
   startedAt: string;
   finishedAt: string;
   config: RunConfig;
-  nodeVersion: string | null;
+  environment: RunEnvironment | null;
   results: RouteResult[];
 };
 
@@ -45,6 +56,6 @@ export type BenchEvent =
       medianRps: number;
     }
   | { type: "run-finished"; result: RunResult }
-  | { type: "error"; adapter: Adapter; route?: RouteId; round: number; message: string };
+  | { type: "error"; adapter?: Adapter; route?: RouteId; round?: number; message: string };
 
 export type Emit = (event: BenchEvent) => void;

@@ -16,7 +16,7 @@ function progress(event: BenchEvent): void {
       process.stderr.write(`  median so far: ${event.medianRps} req/s\n`);
       return;
     case "error":
-      process.stderr.write(`  ERROR ${event.adapter}: ${event.message}\n`);
+      process.stderr.write(`  ERROR ${event.adapter ?? "run"}: ${event.message}\n`);
       return;
     case "run-started":
     case "adapter-started":
@@ -50,5 +50,9 @@ if (!config.success) {
   process.exit(1);
 }
 
-const result = await runBenchmark(config.output, progress);
+const controller = new AbortController();
+process.once("SIGINT", () => controller.abort());
+process.once("SIGTERM", () => controller.abort());
+
+const result = await runBenchmark(config.output, progress, controller.signal);
 process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
