@@ -1,0 +1,91 @@
+@use "abstracts" as a;
+
+.benchmark-showcase {
+  display: grid;
+  gap: a.space(6);
+
+  &__header {
+    display: grid;
+    gap: a.space(4);
+
+    @include a.breakpoint("md") {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  &__intro {
+    display: grid;
+    gap: a.space(2);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__lead {
+    margin: 0;
+    color: var(--color-muted-foreground);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: a.space(2);
+  }
+
+  &__chart {
+    display: grid;
+    gap: a.space(4);
+    min-inline-size: 0;
+  }
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: a.space(2) a.space(4);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__routes {
+    flex-wrap: wrap;
+  }
+
+  &__footer {
+    display: grid;
+    gap: a.space(3);
+    color: var(--color-muted-foreground);
+    font-size: var(--text-sm);
+  }
+
+  &__note {
+    margin: 0;
+    color: var(--color-foreground);
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: a.space(2) a.space(6);
+    margin: 0;
+  }
+
+  &__link {
+    color: var(--color-primary);
+  }
+
+  &__skeleton-heading {
+    block-size: 5rem;
+  }
+
+  &__skeleton-stats {
+    block-size: 7rem;
+  }
+
+  &__skeleton-chart {
+    block-size: 26rem;
+  }
+}

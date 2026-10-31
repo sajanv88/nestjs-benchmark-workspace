@@ -1,0 +1,27 @@
+@use "abstracts" as a;
+
+.run-progress {
+  display: grid;
+  gap: a.space(2);
+  font-size: var(--text-sm);
+
+  &__heading {
+    display: flex;
+    flex-wrap: wrap;
+    gap: a.space(2);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__active {
+    display: flex;
+    flex-wrap: wrap;
+    gap: a.space(2);
+    align-items: center;
+  }
+
+  &__route {
+    color: var(--color-muted-foreground);
+    font-family: var(--font-mono);
+  }
+}
