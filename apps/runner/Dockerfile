@@ -60,4 +60,5 @@ COPY --from=builder /deploy ./
 LABEL org.opencontainers.image.title="runner" \
       org.opencontainers.image.licenses="UNLICENSED"
 USER 1001:1001
-CMD ["node", "dist/cli.js"]
+EXPOSE 4000
+CMD ["node", "dist/server.js"]
