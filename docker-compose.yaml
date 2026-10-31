@@ -1,0 +1,60 @@
+name: nest-adapter-benchmarks
+
+# Every bench service gets the same image and the same limits; only the adapter and port differ.
+# Ports are published on the host's loopback for debugging. The runner uses the compose network.
+x-bench-app: &bench-app
+  image: bench-app:local
+  build:
+    context: .
+    dockerfile: apps/bench-app/Dockerfile
+  cpus: 1.0
+  mem_limit: 512m
+  memswap_limit: 512m
+  read_only: true
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges:true
+  restart: unless-stopped
+
+# Fast while starting, then rare: a probe inside a 1-CPU container would land in measured runs.
+x-bench-healthcheck: &bench-healthcheck
+  interval: 5m
+  timeout: 3s
+  retries: 3
+  start_period: 30s
+  start_interval: 1s
+
+services:
+  bench-express:
+    <<: *bench-app
+    environment:
+      BENCH_ADAPTER: express
+      PORT: "3001"
+    ports:
+      - "127.0.0.1:3001:3001"
+    healthcheck:
+      <<: *bench-healthcheck
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3001/health"]
+
+  bench-fastify:
+    <<: *bench-app
+    environment:
+      BENCH_ADAPTER: fastify
+      PORT: "3002"
+    ports:
+      - "127.0.0.1:3002:3002"
+    healthcheck:
+      <<: *bench-healthcheck
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3002/health"]
+
+  bench-node:
+    <<: *bench-app
+    environment:
+      BENCH_ADAPTER: node
+      PORT: "3003"
+    ports:
+      - "127.0.0.1:3003:3003"
+    healthcheck:
+      <<: *bench-healthcheck
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3003/health"]
