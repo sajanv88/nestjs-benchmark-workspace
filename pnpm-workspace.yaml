@@ -1,0 +1,33 @@
+packages:
+  - apps/*
+  - packages/*
+
+# One version of each shared dependency for the whole repo. Packages depend on "catalog:".
+# turbo is pinned in the root package.json instead: the Dockerfile reads it from there.
+catalog:
+  "@biomejs/biome": 2.5.15
+  "@nestjs/common": 12.3.2
+  "@nestjs/core": 12.3.2
+  "@nestjs/platform-express": 12.3.2
+  "@nestjs/platform-fastify": 12.3.2
+  "@nestjs/platform-node": 12.3.2
+  "@types/node": 26.6.5
+  postcss: 8.5.30
+  reflect-metadata: 0.2.2
+  rxjs: 7.8.2
+  stylelint: 17.16.0
+  stylelint-config-standard-scss: 17.0.0
+  typescript: 7.0.2
+  valibot: 1.5.0
+
+# Install scripts are denied unless listed here (strictDepBuilds is on by default).
+# Review a package's script before setting it to true.
+allowBuilds: {}
+
+# Supply chain: a version must be a day old before it can be installed, and a package
+# whose new version lost the provenance its previous version had is refused.
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade
+
+audit:
+  level: high
