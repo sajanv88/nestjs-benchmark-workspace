@@ -6,7 +6,7 @@ Author: sajanv88
 
 ![The benchmark page: a bar chart of requests per second for each adapter on three routes, with Nest + Node leading on all of them](docs/screenshot.png)
 
-A full run on one machine. See [Reading the numbers](#reading-the-numbers).
+A full run at 300 connections on one machine. See [Reading the numbers](#reading-the-numbers).
 
 > [!WARNING]
 > The runner executes load tests on request and has no authentication. Out of the box, Compose publishes it on `127.0.0.1` only, and it refuses other hosts and origins. You're free to change that, but exposing it publicly isn't recommended: anyone who can reach it can start load tests on your machine. If you do, it's at your own risk.
@@ -21,7 +21,7 @@ docker compose up -d --build --wait   # the three apps and the runner
 pnpm dev                              # the page
 ```
 
-Open <http://localhost:3000> and press **Run benchmark**. A full run takes about 5 minutes and uses the machine hard, so close anything heavy first. **Stop** ends it in about a second.
+Open <http://localhost:3000>, set **Connections** if you want more than 100, and press **Run benchmark**. A full run takes about 5 minutes and uses the machine hard, so close anything heavy first. **Stop** ends it in about a second.
 
 When you're finished, stop `pnpm dev` and run `docker compose down`.
 
@@ -36,6 +36,7 @@ The shape follows [nestjs/nest#18063](https://github.com/nestjs/nest/pull/18063)
 - **They're relative to this machine.** They aren't comparable to the PR's M1 Pro results, or to another computer.
 - **Read the order, not the exact ratio.** The order held in every run here. The size of the lead didn't: with the same 100 connections split across two load generators, Node's lead over Fastify on `GET /` fell from +54% to +6%.
 - **Expect noise.** A single figure can move by about 10% between runs.
+- **Be careful above 100 connections.** The load generator is one autocannon process, so it may become the limit before the faster adapters do, and their numbers would then describe autocannon. In one short test, going from 100 to 1000 connections left Express about the same, while Fastify fell by about 26% and Node by about 40% on `GET /`.
 
 ## Saved results
 
