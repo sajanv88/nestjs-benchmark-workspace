@@ -30,12 +30,6 @@
     color: var(--color-muted-foreground);
   }
 
-  &__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: a.space(2);
-  }
-
   &__chart {
     display: grid;
     gap: a.space(4);

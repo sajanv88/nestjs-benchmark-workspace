@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
@@ -19,6 +18,7 @@ import { ROUTE_IDS, type RunResult } from "@repo/types";
 import { useState } from "react";
 import { BenchmarkChart } from "@/components/benchmark-chart/benchmark-chart";
 import { BenchmarkStats } from "@/components/benchmark-stats/benchmark-stats";
+import { RunActions } from "@/components/run-actions/run-actions";
 import { RunMessage } from "@/components/run-message/run-message";
 import { RunProgress } from "@/components/run-progress/run-progress";
 import { RunSettings } from "@/components/run-settings/run-settings";
@@ -91,14 +91,12 @@ export function BenchmarkShowcase({ initialResult, runnerUrl }: BenchmarkShowcas
             on this machine. A full run takes about 5 minutes.
           </p>
         </div>
-        <div className="benchmark-showcase__actions">
-          <Button intent="secondary" disabled={!running || running.stopping} onClick={stop}>
-            Stop
-          </Button>
-          <Button disabled={connection !== "online" || Boolean(running)} onClick={run}>
-            Run benchmark
-          </Button>
-        </div>
+        <RunActions
+          canRun={connection === "online" && !running}
+          canStop={Boolean(running) && !running?.stopping}
+          onRun={run}
+          onStop={stop}
+        />
       </header>
 
       {/* Bar widths and tiles change every second, so milestones are announced here instead. */}

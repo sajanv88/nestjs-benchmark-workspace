@@ -1,0 +1,9 @@
+@use "abstracts" as a;
+
+.run-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: a.space(2);
+
+  @include a.focus-ring;
+}
